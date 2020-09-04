@@ -8,19 +8,10 @@ const App = props => {
       { name: "Max", age: 28 },
       { name: "Manu", age: 29 },
       { name: "Stephanie", age: 26 },
-    ],
-    otherState: 'somet other value'
+    ]
   });
 
-  const switchNameHandler = () => {
-    setPersonsState({
-      persons: [
-        { name: "Maximillian", age: 27 },
-        { name: "Manu", age: 29 },
-        { name: "Stephanie", age: 26 },
-      ]
-    })
-  }
+  const [showPersonsState, setShowPersonsState] = useState(true);
 
   const nameChangedHandler = (event) => {
     setPersonsState({
@@ -32,14 +23,34 @@ const App = props => {
     })
   }
 
+  const deletePersonHandler = (index) => {
+    // const persons = personsState.persons;
+    const persons = [...personsState.persons]
+    persons.splice(index, 1);
+    setPersonsState({ persons });
+  }
+
+  const tooglePersonHandler = () => {
+    setShowPersonsState(!showPersonsState);
+  }
+
+  let persons = null;
+  if (showPersonsState) {
+    persons = (
+      <div>
+        {personsState.persons.map((p, index) => 
+          <Person name={p.name} age={p.age} click={() => deletePersonHandler(index)} />
+        )}
+      </div>
+    )
+  }
+
   return (
     <div className="App">
       <h1>Hi, I'm a React App</h1>
       <p>This is really working!!!</p>
-      <button onClick={switchNameHandler}>Switch Name</button>
-      <Person name={personsState.persons[0].name} age={personsState.persons[0].age} changed={nameChangedHandler}/>
-      <Person name={personsState.persons[1].name} age={personsState.persons[1].age} changed={nameChangedHandler}>My hobbie: Racing</Person>
-      <Person name={personsState.persons[2].name} age={personsState.persons[2].age} changed={nameChangedHandler}/>
+      <button onClick={tooglePersonHandler}>Toggle People</button>
+      {persons}
     </div>
   );
 }
