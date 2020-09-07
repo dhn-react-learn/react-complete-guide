@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import './App.css';
+import classes from './App.css';
+
 import Person from './Person/Person';
 
 const App = props => {
@@ -30,6 +31,7 @@ const App = props => {
   const tooglePersonHandler = () => {
     setShowPersonsState(!showPersonsState);
   }
+  let btnClass = ''
 
   let persons = null;
   if (showPersonsState) {
@@ -45,14 +47,29 @@ const App = props => {
           />
         )}
       </div>
-    )
+    );
+
+    btnClass = classes.Red;
+  }
+
+  const assigedClasses = [];
+  if (personsState.persons.length <= 2) {
+    assigedClasses.push(classes.red);
+  }
+  if (personsState.persons.length <= 1) {
+    assigedClasses.push(classes.bold);
   }
 
   return (
-    <div className="App">
+    <div className={classes.App}>
       <h1>Hi, I'm a React App</h1>
-      <p>This is really working!!!</p>
-      <button onClick={tooglePersonHandler}>Toggle People</button>
+      <p className={assigedClasses.join(' ')}>This is really working!!!</p>
+      <button
+        className={btnClass}
+        onClick={tooglePersonHandler}
+      >
+        Toggle People
+      </button>
       {persons}
     </div>
   );
