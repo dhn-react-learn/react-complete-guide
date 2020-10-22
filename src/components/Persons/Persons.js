@@ -1,15 +1,11 @@
-import React, { Component } from 'react';
-import Person from './Person/Person'
+import React, { PureComponent } from 'react';
+import Person from './Person/Person';
+import AuthContext from '../../context/auth-context';
 
-class Persons extends Component {
+class Persons extends PureComponent {
   static getDerivedStateFromProps(props, state) {
     console.log('[Persons.js] getDerivedStateFromProps', props);
     return state;
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log('[Persons.js] shouldComponentUpdate');
-    return true;
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
@@ -20,6 +16,10 @@ class Persons extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     console.log('[Persons.js] componentDidUpdate');
     console.log(snapshot);
+  }
+
+  componentWillUnmount() {
+    console.log('[Persons.js] componentWillUnmount');
   }
 
   render() {
